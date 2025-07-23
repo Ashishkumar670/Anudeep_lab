@@ -1,0 +1,123 @@
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 19
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| anp                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| world              |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use world
+Database changed
+mysql> select * from customer;
++-------------+-------+-------------------+-------------+-------+------------+----------+
+| customer_id | name  | email             | address     | city  | phone_no   | pin_code |
++-------------+-------+-------------------+-------------+-------+------------+----------+
+| C001        | rahul | rahul@example.com | 123 mg road | delhi | 9876543210 | 110001   |
++-------------+-------+-------------------+-------------+-------+------------+----------+
+1 row in set (0.00 sec)
+
+mysql> insert into customer values ('c002', 'anjali', 'anjali@example.com', '56 park lane', 'mumbai', '9123456780', '400001');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values ('c003', 'suresh', 'suresh@example.com', '88 nehru street', 'chennai', '9988776655', '600001');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values ('c004', 'meena', 'meena@example.com', '45 hill view', 'kolkata', '9876512345', '700001');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values ('c005', 'arjun', 'arjun@example.com', '12 green road', 'bangalore', '9345612789', '560001');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customer;
++-------------+--------+--------------------+-----------------+-----------+------------+----------+
+| customer_id | name   | email              | address         | city      | phone_no   | pin_code |
++-------------+--------+--------------------+-----------------+-----------+------------+----------+
+| C001        | rahul  | rahul@example.com  | 123 mg road     | delhi     | 9876543210 | 110001   |
+| c002        | anjali | anjali@example.com | 56 park lane    | mumbai    | 9123456780 | 400001   |
+| c003        | suresh | suresh@example.com | 88 nehru street | chennai   | 9988776655 | 600001   |
+| c004        | meena  | meena@example.com  | 45 hill view    | kolkata   | 9876512345 | 700001   |
+| c005        | arjun  | arjun@example.com  | 12 green road   | bangalore | 9345612789 | 560001   |
++-------------+--------+--------------------+-----------------+-----------+------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> create table product (product_id varchar(10) primary key, product_name varchar(50), category varchar(30), sub_category varchar(30), original_price int, selling_price int, stock int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into product values ('p001', 't-shirt', 'clothing', 'men', 500, 450, 100);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into product values ('p002', 'jeans', 'clothing', 'women', 1200, 999, 80);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into product values ('p003', 'watch', 'accessories', 'unisex', 2000, 1850, 60);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into product values ('p004', 'shoes', 'footwear', 'men', 1500, 1350, 70);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into product values ('p005', 'handbag', 'accessories', 'women', 2500, 2300, 40);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from product;
++------------+--------------+-------------+--------------+----------------+---------------+-------+
+| product_id | product_name | category    | sub_category | original_price | selling_price | stock |
++------------+--------------+-------------+--------------+----------------+---------------+-------+
+| p001       | t-shirt      | clothing    | men          |            500 |           450 |   100 |
+| p002       | jeans        | clothing    | women        |           1200 |           999 |    80 |
+| p003       | watch        | accessories | unisex       |           2000 |          1850 |    60 |
+| p004       | shoes        | footwear    | men          |           1500 |          1350 |    70 |
+| p005       | handbag      | accessories | women        |           2500 |          2300 |    40 |
++------------+--------------+-------------+--------------+----------------+---------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table `order` (order_id varchar(10) primary key, customer_id varchar(10), product_id varchar(10), quantity int, total_price int, order_status varchar(20), order_date date, payment_mode varchar(20), foreign key (customer_id) references customer(customer_id), foreign key (product_id) references product(product_id));
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> insert into `order` values ('o001', 'c001', 'p001', 2, 900.00, 'shipped', '2025-07-09', 'online');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into `order` values ('o002', 'c002', 'p002', 1, 999.00, 'delivered', '2025-07-08', 'cod');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into `order` values ('o003', 'c003', 'p003', 1, 1850.00, 'processing', '2025-07-07', 'online');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into `order` values ('o004', 'c004', 'p004', 3, 4050.00, 'shipped', '2025-07-06', 'upi');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into `order` values ('o005', 'c005', 'p005', 1, 2300.00, 'delivered', '2025-07-05', 'netbanking');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from order;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order' at line 1
+mysql> select * from `order`;
++----------+-------------+------------+----------+-------------+--------------+------------+--------------+
+| order_id | customer_id | product_id | quantity | total_price | order_status | order_date | payment_mode |
++----------+-------------+------------+----------+-------------+--------------+------------+--------------+
+| o001     | c001        | p001       |        2 |         900 | shipped      | 2025-07-09 | online       |
+| o002     | c002        | p002       |        1 |         999 | delivered    | 2025-07-08 | cod          |
+| o003     | c003        | p003       |        1 |        1850 | processing   | 2025-07-07 | online       |
+| o004     | c004        | p004       |        3 |        4050 | shipped      | 2025-07-06 | upi          |
+| o005     | c005        | p005       |        1 |        2300 | delivered    | 2025-07-05 | netbanking   |
++----------+-------------+------------+----------+-------------+--------------+------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql>
